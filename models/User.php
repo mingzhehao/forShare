@@ -34,10 +34,10 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
-            [['role', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32]
+            [['username','password_hash','email'], 'required'],
+            [['username', 'password_hash', 'password_reset_token', 'email'], 'string','max' => 255],
+            //[['username', 'password_hash', 'password_reset_token', 'email'], 'string','min'=>8,'max' => 255],
+            //[['auth_key'], 'string', 'max' => 32]
         ];
     }
 
@@ -48,15 +48,15 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
-            'email' => 'Email',
-            'role' => 'Role',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'username' => '用户名',
+            'auth_key' => '认证Key',
+            'password_hash' => '密码',
+            'password_reset_token' => '密码重置Token',
+            'email' => '用户邮箱',
+            'role' => '用户角色',
+            'status' => '用户状态',
+            'created_at' => '注册时间',
+            'updated_at' => '更新时间',
         ];
     }
 }

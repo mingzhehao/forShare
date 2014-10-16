@@ -12,6 +12,7 @@ use yii\widgets\ListView;
 
 $this->title = '话题管理';
 $this->params['breadcrumbs'][] = $this->title;
+$sort = $_GET['sort'];
 ?>
 <div class="topic-admin-index">
 
@@ -21,10 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1>
             话题
             <ul id="w0" class="nav nav-tabs">
-                <li class="active"><a href="/topic-admin/index">最新发布</a></li>
-                <li><a href="/topic-admin/index?sort=view">最多查看</a></li>
-                <li><a href="/topic-admin/index?sort=up">最多点赞</a></li>
-                <li><a href="/topic-admin/index?sort=score">最高评分</a></li>
+                <li <?php if(empty($sort)) echo 'class="active"'; ?> ><a href="/topic-admin/index">最新发布</a></li>
+                <li <?php if($sort=='view') echo 'class="active"'; ?> ><a href="/topic-admin/index?sort=view">最多查看</a></li>
+                <li <?php if($sort=='up') echo 'class="active"'; ?> ><a href="/topic-admin/index?sort=up">最多点赞</a></li>
+                <li <?php if($sort=='score') echo 'class="active"'; ?>><a href="/topic-admin/index?sort=score">最高评分</a></li>
             </ul>            
         </h1>
     </div>

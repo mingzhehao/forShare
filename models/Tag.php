@@ -36,7 +36,7 @@ class Tag extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['frequency'], 'integer'],
-            [['name','classify'], 'string', 'max' => 128]
+            [['classify_type'], 'string', 'max' => 128]
         ];
     }
 
@@ -127,19 +127,27 @@ class Tag extends \yii\db\ActiveRecord
 
     public function addTags($tags,$classify_type)
     {
-        $criteria=new CDbCriteria;
-        echo "AAA";exit;
-        $criteria->addInCondition('name',$tags);
-        $this->updateCounters(array('frequency'=>1),$criteria);
-        foreach($tags as $name)
+        if(!empty($tags))
         {
-            if(!$this->exists('name=:name',array(':name'=>$name)))
+            foreach($tags as $name)
             {
-                $tag=new Tag;
-                $tag->name=$name;
-                $tag->frequency=1;
-                $tag->classify_type=$classify_type;
-                $tag->save();
+                if(!empty($name))
+                {
+                    $count = Tag::find()->where(['name'=>$name,'classify_type'=>$classify_type])->one();
+                    $tag=new Tag;
+                    if(isset($count)&& !empty($count))
+                    {
+                        $count->frequency +=1;
+                        $count->save();
+                    }
+                    else
+                    {
+                        $tag->name=$tags;
+                        $tag->frequency=1;
+                        $tag->classify_type=$classify_type;
+                        $tag->save();
+                    }
+                }
             }
         }
     }
@@ -148,10 +156,17 @@ class Tag extends \yii\db\ActiveRecord
     {
         if(empty($tags))
             return;
-        $criteria=new CDbCriteria;
-        $criteria->addInCondition('name',$tags);
-        $this->updateCounters(array('frequency'=>-1),$criteria);
-        $this->deleteAll('frequency<=0');
+        $count = Tag::find()->where(['name'=>$tags,'classify_type'=>$classify_type])->one();
+        if(isset($count)&& !empty($count))
+        {
+            $count->frequency -=1;
+            $count->save();
+            Tag::deleteAll('frequency<=0');
+        }
+       //$criteria=new CDbCriteria;
+       //$criteria->addInCondition('name',$tags);
+       //$this->updateCounters(array('frequency'=>-1),$criteria);
+       //$this->deleteAll('frequency<=0');
     }
 
 }
