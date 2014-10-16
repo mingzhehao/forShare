@@ -4,8 +4,10 @@
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 
+ini_set('date.timezone', 'Asia/Shanghai');
 require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
+require(__DIR__ . '/../common/config/alias.php');
 
 $config = require(__DIR__ . '/../config/web.php');
 

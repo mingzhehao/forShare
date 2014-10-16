@@ -49,7 +49,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'common\models\User',//调整了
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [

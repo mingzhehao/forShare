@@ -1,0 +1,5 @@
+
+1. php composer.phar require kartik-v/yii2-widgets "dev-master"
+
+#执行这步前 要修改 composer.json 中  "minimum-stability": "dev",
+2. php composer.phar require kartik-v/yii2-markdown "dev-master"
