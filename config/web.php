@@ -5,7 +5,41 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','gii'],
+    'language' => 'zh-CN',
+    'modules' => [
+        'gii' => 'yii\gii\Module',
+        'allowedIPs' => ['127.0.0.1', '::1', '61.148.75.238'],
+        // ...
+        'Post' => [
+        ],
+        // ...
+        'markdown' => [
+            // the module class
+            'class' => 'kartik\markdown\Module',
+
+            // the controller action route used for markdown editor preview
+            'previewAction' => '/markdown/parse/preview',
+
+            // the controller action route used for downloading the markdown exported file
+            'downloadAction' => '/markdown/parse/download',
+
+            // the list of custom conversion patterns for post processing
+            'customConversion' => [
+                '<table>' => '<table class="table table-bordered table-striped">'
+            ],
+
+            // whether to use PHP SmartyPantsTypographer to process Markdown output
+            'smartyPants' => true,
+
+            // array the the internalization configuration for this module
+            'i18n' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@markdown/messages',
+                'forceTranslation' => true
+            ],
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -36,6 +70,10 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
         ],
         'db' => require(__DIR__ . '/db.php'),
     ],

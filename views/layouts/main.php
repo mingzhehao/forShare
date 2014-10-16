@@ -26,25 +26,59 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                //'brandLabel' => 'YIIFRAME',
+                'brandLabel' => '<img src="/images/logo.png" alt="">',
                 'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
+                'options' => [ 
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
+            $menuItems = [
+                ['label' => '首页', 'url' => ['/site/index']],
+            ];
+            if (Yii::$app->user->isGuest) {
+                $menuItems[] = ['label' => '登录', 'url' => ['/site/login']];
+            } else {
+                $menuItems[] = ['label' => 'CRUD管理', 'url' => ['/admin/view']];
+                $menuItems[] = ['label' => '用户管理', 'url' => ['/user/index']];
+                $menuItems[] = ['label' => '分类管理', 'url' => ['/classify/index']];
+                $menuItems[] = ['label' => '话题管理', 'url' => ['/topic-admin/index']];
+                $menuItems[] = [
+                    'label' => '退出 (' . Yii::$app->user->identity->username . ')',
+                    'url' => ['/site/logout'],
+                    'linkOptions' => ['data-method' => 'post']
+                ];
+            }
             echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => 'Home', 'url' => ['/site/index']],
-                    ['label' => 'About', 'url' => ['/site/about']],
-                    ['label' => 'Contact', 'url' => ['/site/contact']],
-                    Yii::$app->user->isGuest ?
-                        ['label' => 'Login', 'url' => ['/site/login']] :
-                        ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                            'url' => ['/site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
-                ],
-            ]);
+                'options' => ['class' => 'navbar-nav navbar-left'],
+                'items' => $menuItems,
+            ]); 
+            echo '<form class="navbar-form navbar-left" action="/search" method="post" style="width:300px;">
+                     <input type="hidden" name="_csrf" value="'.Yii::$app->request->getCsrfToken().'">
+                     <div class="input-group">
+                         <input type="text" class="form-control" name="q" placeholder="全站搜索">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                         </span>
+                     </div>
+                     </form>';
+            if(!Yii::$app->user->isGuest)
+            {
+                echo '<ul id="w5" class="navbar-nav navbar-right nav">
+                        <li><a href="/user/notice"><span class="glyphicon glyphicon-envelope"></span> </a></li>
+                        <li class="dropdown"><a class="avatar dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><img src="/images/noavatar_small.gif" width="30" alt=""> <b class="caret"></b></a>
+                            <ul id="w6" class="dropdown-menu"><li><a href="/user" tabindex="-1"><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
+                            <li><a href="/user/site/index" tabindex="-1"><span class="glyphicon glyphicon-cog"></span> 帐户设置</a></li>
+                            <li><a href="/user/favourite" tabindex="-1"><span class="glyphicon glyphicon-star"></span> 我的收藏</a></li>
+                            <li><a href="/top" tabindex="-1"><span class="glyphicon glyphicon-stats"></span> 排行榜</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/site/logout" data-method="post" tabindex="-1"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
+                            </ul>
+                        </li>
+                    </ul>';
+            }
             NavBar::end();
         ?>
 
