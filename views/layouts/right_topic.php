@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use app\models\TopicAdmin;
+use app\models\Tag;
 
 /**
  * @var \yii\web\View $this
@@ -17,6 +18,8 @@ $category = Yii::$app->controller->category();
 $topicClassify = TopicAdmin::topicClassify();
 /*热门文章*/
 $hotPosts = TopicAdmin::getHotPosts();
+/*热门标签*/
+$tags =Tag::findTagWeights(20);
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
@@ -77,11 +80,21 @@ $hotPosts = TopicAdmin::getHotPosts();
                 <div class="panel-heading">热门标签</div>
                 <div class="panel-body">
                     <ul class="tag-list">
-                        <li><span class="label label-success"><a href="/topic?tag=Yii">Yii</a></span></li>
-                        <li><span class="label label-success"><a href="/topic?tag=php">php</a></span></li>
-                        <li><span class="label label-success"><a href="/topic?tag=CGridView">CGridView</a></span></li>
-                        <li><span class="label label-success"><a href="/topic?tag=Ajax">Ajax</a></span></li>
-                        <li><span class="label label-success"><a href="/topic?tag=model">model</a></span></li>
+                    <?php 
+                        if ($this->beginCache('topic-hottags', ['duration' => 3600])) {
+                            $echo = '';
+                            $label = array('label-default','label-primary','label-success','label-warning','label-info');
+                            foreach($tags as $tag=>$weight)
+                            {
+                                $echo .= '<li><span class="label '.$label[rand(0,4)].'">';
+                                $echo .= Html::a(Html::encode($tag), ['topic-admin/index','tag'=>$tag]);
+                                $echo .= '</span></li>';
+                            }
+                            echo $echo;
+                            $this->endCache();
+                        }
+                    ?>
+                    </ul>   
                 </div>
             </div>
 

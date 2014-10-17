@@ -60,10 +60,10 @@ class Tag extends \yii\db\ActiveRecord
      */
     public function findTagWeights($limit=20)
     {
-        $models=$this->findAll(array(
-            'order'=>'frequency DESC',
-            'limit'=>$limit,
-        ));
+        $models=Tag::find()
+            ->orderBy('frequency DESC')
+            ->limit($limit)
+            ->all();
 
         $total=0;
         foreach($models as $model)

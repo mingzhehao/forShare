@@ -46,6 +46,10 @@ class TopicAdminSearch extends TopicAdmin
         {
             $this->classify = mysql_escape_string(trim($params['classify']));
         }
+        elseif(isset($params['tag']) &&!empty($params['tag']))
+        {
+            $this->tags=mysql_escape_string(trim($params['tag']));
+        }
         else
         {
             if (!($this->load($params) && $this->validate())) {
@@ -64,7 +68,6 @@ class TopicAdminSearch extends TopicAdmin
             'up' => $this->up,
             'classify' => $this->classify,
         ]);
-
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'describe', $this->describe])
