@@ -9,6 +9,7 @@ use app\models\TopicAdminSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Comment;
 
 /**
  * TopicAdminController implements the CRUD actions for TopicAdmin model.
@@ -65,18 +66,24 @@ class TopicAdminController extends Controller
     public function actionView($id)
     {
         $this->layout = 'right_topic';
+        $model   = $this->findModel($id);
+        $comment = $this->newComment($model);
+
         return $this->render('view_user', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'comment' => $comment,
         ]);
         /*非管理人员*/
         if(Yii::$app->user->role !=='1')
         {
             return $this->render('view_user', [
-                'model' => $this->findModel($id),
+                'model' => $model,
+                'comment' => $comment,
             ]);
         }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'comment' => $comment,
         ]);
     }
 
@@ -175,6 +182,47 @@ class TopicAdminController extends Controller
         /*传递classify  &classify=1*/
         $classifyInfo = $searchModel->getClassify(Yii::$app->request->getQueryParams());
         return $classifyInfo;
+    }
+
+    /**
+     * Creates a new comment.
+     * This method attempts to create a new comment based on the user input.
+     * If the comment is successfully created, the browser will be redirected
+     * to show the created comment.
+     * @param News the news that the new comment belongs to
+     * @return Comment the comment instance
+     */
+    protected function newComment($model)
+    {
+        $comment=new Comment;
+        if($comment->load(Yii::$app->request->post()))
+        {
+            /**验证通过***/
+            $comment->attributes=$_POST['Comment'];
+            if(Yii::$app->user->isGuest)
+            {
+                return $comment;
+            }
+            else
+            {
+                //$comment->author    = Yii::$app->user->getUserName();
+                $comment->author_id = Yii::$app->user->id;
+                var_dump($comment->attributes);exit;
+            }
+            if($comment->author === '')
+            {
+                Yii::$app->user->setFlash('commentSubmitted','请先登录');$this->refresh();
+                exit();
+            }
+            $comment->content = $_POST['Comment']['content'];
+            if($model->addComment($comment))
+            {
+                if($comment->status==Comment::STATUS_PENDING)
+                    Yii::$app->user->setFlash('commentSubmitted','评论会在审核通过后显示。');
+                $this->refresh();
+            }
+        }
+        return $comment;
     }
 
 }

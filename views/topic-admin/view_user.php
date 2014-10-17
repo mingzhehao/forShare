@@ -68,6 +68,6 @@ $this->params['breadcrumbs'][] = $this->title;
     
 
     <?php //echo $this->render('../comment/create',['model' => $model,]); ?>
-    <?php echo $this->render('_comment',['model' => $model,]); ?>
+    <?php echo $this->render('/comment/_form',['model' => $comment,]); ?>
 
 </div>
