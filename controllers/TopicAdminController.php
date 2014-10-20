@@ -10,6 +10,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Comment;
+use yii\data\ActiveDataProvider;
+
 
 /**
  * TopicAdminController implements the CRUD actions for TopicAdmin model.
@@ -68,10 +70,14 @@ class TopicAdminController extends Controller
         $this->layout = 'right_topic';
         $model   = $this->findModel($id);
         $comment = $this->newComment($model);
+        /************评论分页开始****************/
+        $dataProvider = $this->getComments($id);
+        /*************评论分页结束****************/
 
         return $this->render('view_user', [
             'model' => $model,
             'comment' => $comment,
+            'dataProvider'=>$dataProvider,
         ]);
         /*非管理人员*/
         if(Yii::$app->user->role !=='1')
@@ -185,6 +191,25 @@ class TopicAdminController extends Controller
     }
 
     /**
+     * 获取评论信息
+     * @param  string $newsid 文章id
+     * @return object         返回评论信息
+     */
+    public function getComments($id)
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Comment::find(),
+            'keys'  => ['post_id'=>$id,'status'=>Comment::STATUS_APPROVED ],
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+            'sort'=> ['defaultOrder' => ["create_time"=>SORT_DESC]],
+        ]);
+        return $dataProvider;
+    }
+
+
+    /**
      * Creates a new comment.
      * This method attempts to create a new comment based on the user input.
      * If the comment is successfully created, the browser will be redirected
@@ -205,20 +230,28 @@ class TopicAdminController extends Controller
             }
             else
             {
-                //$comment->author    = Yii::$app->user->getUserName();
-                $comment->author_id = Yii::$app->user->id;
-                var_dump($comment->attributes);exit;
+                $comment->author_id   = Yii::$app->user->id;//评论者的id
+                $comment->author_name = Yii::$app->user->getIdentity()->username;//评论者的名称
+                $comment->create_time = date("Y-m-d H:i:s",time());
+                if(Yii::$app->user->getIdentity()->role == 1)
+                    $comment->status= 1;//用户角色是1=》管理员 直接通过，其他角色需要审核。
+                else
+                    $comment->status= 2;//待审核
+                //$comment->post_id   = $model->id;//文章id
+                $comment->user_id   = $model->author_id;//文章作者id
+                $comment->classify_type = TopicAdmin::getClassName();//分类
+                $comment->comment_parent_id = '0';
             }
-            if($comment->author === '')
+            if($comment->author_id === '')
             {
-                Yii::$app->user->setFlash('commentSubmitted','请先登录');$this->refresh();
+                Yii::$app->Session->setFlash('commentSubmitted','请先登录');$this->refresh();
                 exit();
             }
             $comment->content = $_POST['Comment']['content'];
             if($model->addComment($comment))
             {
                 if($comment->status==Comment::STATUS_PENDING)
-                    Yii::$app->user->setFlash('commentSubmitted','评论会在审核通过后显示。');
+                    Yii::$app->Session->setFlash('commentSubmitted','评论会在审核通过后显示。');
                 $this->refresh();
             }
         }

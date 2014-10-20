@@ -19,6 +19,8 @@ use Yii;
  */
 class Comment extends \yii\db\ActiveRecord
 {
+    const STATUS_PENDING=1;#需要审核
+    const STATUS_APPROVED=2;#审核通过
     /**
      * @inheritdoc
      */
