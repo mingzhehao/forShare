@@ -197,14 +197,18 @@ class TopicAdminController extends Controller
      */
     public function getComments($id)
     {
+        $query = Comment::find();
         $dataProvider = new ActiveDataProvider([
-            'query' => Comment::find(),
+            'query' => $query,
             'keys'  => ['post_id'=>$id,'status'=>Comment::STATUS_APPROVED ],
             'pagination' => [
                 'pageSize' => 5,
             ],
             'sort'=> ['defaultOrder' => ["create_time"=>SORT_DESC]],
         ]);
+        $query->andFilterWhere([
+            'post_id' => $id
+            ]);
         return $dataProvider;
     }
 
