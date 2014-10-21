@@ -38,6 +38,7 @@ AppAsset::register($this);
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => '登录', 'url' => ['/site/login']];
+                $menuItems[] = ['label' => '注册', 'url' => ['/site/signup']];
             } else {
                 $menuItems[] = ['label' => 'CRUD管理', 'url' => ['/admin/view']];
                 $menuItems[] = ['label' => '用户管理', 'url' => ['/user/index']];

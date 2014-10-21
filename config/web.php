@@ -48,6 +48,21 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'memcache' => [
+            'class' => 'yii\caching\MemCache',
+            'servers' => [
+                [
+                    'host' => '127.0.0.1',
+                    'port' => 12321,
+                    'weight' => 100,
+                ],
+                [
+                    'host' => '127.0.0.1',
+                    'port' => 12321,
+                    'weight' => 50,
+                ],
+            ],
+        ],
         'user' => [
             'identityClass' => 'common\models\User',//调整了
             'enableAutoLogin' => true,

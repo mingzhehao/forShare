@@ -32,22 +32,26 @@ $sort = $_GET['sort'];
 
 
         <?php
-        echo ListView::widget([
-            'dataProvider' => $dataProvider,
-            'itemView' => '_listItem',
-            'layout' => '{items}{pager}',
-            'itemOptions' => ['class' => 'media-list'],
-            'options' => [
-                'tag' => 'div',
-                'class' => 'ten-vertical summary-list',
-        ],
+            /***片段缓存----文章****/
+            if ($this->beginCache('topic-post', ['duration' => 600])) {
+                echo ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'itemView' => '_listItem',
+                    'layout' => '{items}{pager}',
+                    'itemOptions' => ['class' => 'media-list'],
+                    'options' => [
+                        'tag' => 'div',
+                        'class' => 'ten-vertical summary-list',
+                    ],
+                ]);
+                $this->endCache();
+            }
 
         //'viewParams' => array(
         //    'categoryAlias' => '123',
         //    'imageConfig' => array('width' => 120, 'height' => 120, 'fill' => true),
         //    'firstImageConfig' => array('width' => 436, 'height' => 436, 'fill' => true),
         //),
-    ]);
     ?>
 
 

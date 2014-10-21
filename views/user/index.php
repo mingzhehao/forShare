@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\grid\DataColumn;
 
 /**
  * @var yii\web\View $this
@@ -30,14 +31,41 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
-            // 'email:email',
-            // 'role',
-            // 'status',
-            // 'created_at',
-            // 'updated_at',
+            //'auth_key',
+            //'password_hash',
+            //'password_reset_token',
+            'email:email',
+            [  
+                'class' => DataColumn::className(),
+                'attribute' => 'role', 
+                'format' => 'text',
+                'value' => function($data){
+                        if($data->role=='1')
+                            return "管理员";
+                        else
+                            return "会员";
+                     },
+            ],
+            [  
+                'attribute' => 'status', 
+                'format' => 'text',
+                'value' => function($data){
+                        if($data->status=='0')
+                            return "删除";
+                        else
+                            return "活跃";
+                     },
+            ],
+            [  
+                'attribute' => 'created_at', 
+                'format' => 'text',
+                'value' => function($data){return date("Y-m-d H:i:s",($data->created_at));},
+            ],
+            [  
+                'attribute' => 'updated_at', 
+                'format' => 'text',
+                'value' => function($data){return date("Y-m-d H:i:s",($data->created_at));},
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -41,6 +41,18 @@ class TopicAdminController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],//首页进行页面缓存
+                'duration' => 60,
+                'variations' => [
+                    \Yii::$app->language,
+                ],
+                'dependency' => [
+                    'class' => 'yii\caching\DbDependency',
+                    'sql' => 'SELECT COUNT(*) FROM topic',
+                ],
+            ],
         ];
     }
 
