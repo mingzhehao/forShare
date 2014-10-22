@@ -10,7 +10,7 @@ use yii\grid\DataColumn;
  * @var app\models\UserSearch $searchModel
  */
 
-$this->title = 'Users';
+$this->title = '用户';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('创建', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [  
                 'attribute' => 'updated_at', 
                 'format' => 'text',
-                'value' => function($data){return date("Y-m-d H:i:s",($data->created_at));},
+                'value' => function($data){return date("Y-m-d H:i:s",($data->updated_at));},
             ],
 
             ['class' => 'yii\grid\ActionColumn'],

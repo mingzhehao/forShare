@@ -8,8 +8,8 @@ use yii\widgets\DetailView;
  * @var app\models\User $model
  */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->title = $model->username;
+$this->params['breadcrumbs'][] = ['label' => '用户', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
@@ -34,16 +34,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'auth_key',
             [
-                'attribute' => "role",
-                'value' => $model->role,
-            ],  
+                'attribute'=>'status', 
+                //'label'=>'Available?',
+                'format'=>'raw',
+                'value'=>$model->status =='10' ? 
+                    '<span class="label label-success">活跃</span>' : 
+                    '<span class="label label-danger">封禁</span>',
+            ],
             //'password_hash',
             //'password_reset_token',
             'email:email',
-            'role',
-            'status',
-            'created_at',
-            'updated_at',
+            [
+                'attribute'=>'role', 
+                //'label'=>'Available?',
+                'format'=>'raw',
+                'value'=>$model->role =='10' ? 
+                    '<span class="label label-warning">会员</span>' : 
+                    '<span class="label label-success">管理员</span>',
+            ],
+            [
+                'attribute'=>'created_at', 
+                'value' => date("Y-m-d H:i:s",$model->created_at)
+            ],
+            [
+                'attribute'=>'updated_at', 
+                'value' => date("Y-m-d H:i:s",$model->updated_at)
+            ],
         ],
     ]) ?>
 
