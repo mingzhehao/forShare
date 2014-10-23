@@ -13,6 +13,9 @@ $config = [
         // ...
         'Post' => [
         ],
+        'User' => [
+            'class' => 'app\modules\user\Module',//大写User处理module模块，user是后台管理使用
+        ],
         // ...
         'markdown' => [
             // the module class
@@ -101,7 +104,10 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = 'yii\debug\Module';
 
     $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = 'yii\gii\Module';
+    $config['modules']['gii'] = [
+        'class' => 'yii\gii\Module',
+        'allowedIPs' => ['127.0.0.1', '::1', '61.148.75.238'],
+    ];
 }
 
 return $config;
