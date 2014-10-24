@@ -23,6 +23,9 @@ class AppAsset extends AssetBundle
         'css/style.css'
     ];
     public $js = [
+        'js/main.js',
+        'js/jquery.jscrollpane.min.js',
+        'js/jquery.mousewheel.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
