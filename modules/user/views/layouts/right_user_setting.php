@@ -79,7 +79,7 @@ $userid = isset($_GET['id'])?$_GET['id']:Yii::$app->user->id;//url中的id
             </div>
         </div>
 
-        <div class="col-md-9 col-sm-8">
+        <div class="col-lg-9">
             <?= $content ?>
         </div>
 </div>

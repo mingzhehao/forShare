@@ -110,4 +110,21 @@ class User extends \yii\db\ActiveRecord
             return false;
     }
 
+
+    /**
+     * @param integer the maximum number of comments that should be returned
+     * @return array the most recently added comments
+     */
+    public function getUserInfo($id)
+    {
+        if($id == Yii::$app->user->id)
+            return Yii::$app->user->getIdentity();
+        else
+        {
+            $user = User::find()->where(['id' => "$id"])->one();
+            return $user;
+        }
+    }
+
+
 }

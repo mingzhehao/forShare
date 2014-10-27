@@ -16,6 +16,26 @@ $config = [
         'User' => [
             'class' => 'app\modules\user\Module',//大写User处理module模块，user是后台管理使用
         ],
+
+        /**admin后台 rbac**/
+        #'admin' => [
+        #    'class' => 'mdm\admin\Module',
+        #    'layout' => 'left-menu', // default null. other avaliable value 'right-menu' and 'top-menu'
+        #    'controllerMap' => [
+        #         'assignment' => [
+        #            'class' => 'mdm\admin\controllers\AssignmentController',
+        #            'userClassName' => 'common\models\User',
+        #            'idField' => 'id'
+        #        ]
+        #    ],
+        #    'menus' => [
+        #        'assignment' => [
+        #            'label' => 'Grand Access' // change label
+        #        ],
+        #        'route' => null, // disable menu
+        #    ],
+        #],
+
         // ...
         'markdown' => [
             // the module class
@@ -70,6 +90,9 @@ $config = [
             'identityClass' => 'common\models\User',//调整了
             'enableAutoLogin' => true,
         ],
+        #'authManager' => [
+        #    'class' => 'yii\rbac\PhpManager', // or use 'yii\rbac\DbManager'
+        #],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -92,9 +115,21 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'rules' =>  [
+                        'User/<id:\d+>'=>'User/home',
+                        'User/setting'=>'User/home/setting',
+                        'User/avatar'=>'User/home/avatar',
+                ],
         ],
         'db' => require(__DIR__ . '/db.php'),
     ],
+    #'as access' => [
+    #    'class' => 'mdm\admin\components\AccessControl',
+    #    'allowActions' => [
+    #        'admin/*', // add or remove allowed actions to this list
+    #    ]
+    #],
+
     'params' => $params,
 ];
 

@@ -20,12 +20,14 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/panels.css',
-        'css/style.css'
+        'css/style.css',
+        'css/jasny-bootstrap.css',
     ];
     public $js = [
         'js/main.js',
         'js/jquery.jscrollpane.min.js',
         'js/jquery.mousewheel.min.js',
+        'js/jasny-bootstrap.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
