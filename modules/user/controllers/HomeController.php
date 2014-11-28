@@ -12,6 +12,9 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\helpers\Url;
 
+use app\models\UploadForm;
+use yii\web\UploadedFile;
+
 class HomeController extends Controller
 {
     public function behaviors()
@@ -54,7 +57,7 @@ class HomeController extends Controller
         {
             return $this->render('error',['id'=>$id]);
         }
-        $this->layout = 'right_user';
+        $this->layout = 'left_user';
         return $this->render('index',['model'=>$model,]);
     }
 
@@ -66,19 +69,60 @@ class HomeController extends Controller
         {
             return $this->render('error',['id'=>Yii::$app->user->id]);
         }
-        $this->layout = 'right_user_setting';
+        $this->layout = 'left_user_setting';
         return $this->render('setting',['model'=>$model,]);
     }
 
     /*用户头像设置*/
     public function actionAvatar()
     {
+        $model = new User();
+        $this->layout = 'left_user_setting';
+
+        if (Yii::$app->request->isPost) {
+            $files = UploadedFile::getInstances($model, 'file');
+            var_dump($files);exit;
+
+            foreach ($files as $file) {
+
+                $_model = new UploadForm();
+
+                $_model->file = $file;
+
+                if ($_model->validate()) {
+                    $_model->file->saveAs('uploads/' . $_model->file->baseName . '.' . $_model->file->extension);
+                } else {
+                    foreach ($_model->getErrors('file') as $error) {
+                        $model->addError('file', $error);
+                    }
+                }
+            }
+
+            if ($model->hasErrors('file')){
+                $model->addError(
+                    'file',
+                    count($model->getErrors('file')) . ' of ' . count($files) . ' files not uploaded'
+                );
+            }
+
+        }
+
+        return $this->render('avatar', ['model' => $model]);
+
+
+
+        $model = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            var_dump($_POST);exit;
+            //$model->file = UploadedFile::getInstance($model, 'file');
+        }
+
         $model = User::find()->one();
         if(empty($model))
         {
             return $this->render('error',['id'=>Yii::$app->user->id]);
         }
-        $this->layout = 'right_user_setting';
+        $this->layout = 'left_user_setting';
         return $this->render('avatar',['model'=>$model,]);
     }
 
@@ -93,7 +137,7 @@ class HomeController extends Controller
         {
             return $this->render('error',['id'=>$id]);
         }
-        $this->layout = 'right_user';
+        $this->layout = 'left_user';
         return $this->render('index',['model'=>$model,]);
     }
 }

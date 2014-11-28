@@ -20,6 +20,7 @@
         "yiisoft/yii2-swiftmailer": "*",
         "mdmsoft/yii2-admin": "dev-master",
         "kartik-v/yii2-widgets": "dev-master",
+        "xj/yii2-ueditor-widget": "*",
         "kartik-v/yii2-markdown": "dev-master"
     },
     "require-dev": {

@@ -33,7 +33,7 @@ $sort = $_GET['sort'];
 
         <?php
             /***片段缓存----文章****/
-            if ($this->beginCache('topic-post', ['duration' => 600])) {
+            /*if ($this->beginCache('topic-post', ['duration' => 600])) {
                 echo ListView::widget([
                     'dataProvider' => $dataProvider,
                     'itemView' => '_listItem',
@@ -45,7 +45,17 @@ $sort = $_GET['sort'];
                     ],
                 ]);
                 $this->endCache();
-            }
+            }*/
+                echo ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'itemView' => '_listItem',
+                    'layout' => '{items}{pager}',
+                    'itemOptions' => ['class' => 'media-list'],
+                    'options' => [
+                        'tag' => 'div',
+                        'class' => 'ten-vertical summary-list',
+                    ],
+                ]);
 
         //'viewParams' => array(
         //    'categoryAlias' => '123',

@@ -2,25 +2,25 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
-        
+<script src="/js/jquery.js"></script>
     <div class="page-header">
         <h1>
             个人设置
-            <ul id="w0" class="nav nav-tabs"><li><a href="/user/site/index">个人信息</a></li>
-                <li class="active"><a href="/user/site/avatar">修改头像</a></li>
-                <li><a href="/user/site/password">修改密码</a></li>
-                <li><a href="/user/site/third">第三方登录</a></li>
+            <ul id="w0" class="nav nav-tabs"><li><a href="/User/setting">个人信息</a></li>
+                <li class="active"><a href="/User/avatar">修改头像</a></li>
+                <li><a href="/User/password">修改密码</a></li>
+                <li><a href="/User/third">第三方登录</a></li>
             </ul>    
         </h1>
     </div>
 
     <div class="preview">
         <div class="avatar-big">
-            <img src="/uploads/avatar/000/02/88/93_avatar_big.jpg" alt="">  </div>
+            <img src="/uploads/avatar/noavatar_big.gif" alt="">  </div>
         <div class="avatar-middle">
-            <img src="/uploads/avatar/000/02/88/93_avatar_middle.jpg" alt="">   </div>
+            <img src="/uploads/avatar/noavatar_middle.gif" alt="">   </div>
         <div class="avatar-small">
-            <img src="/uploads/avatar/000/02/88/93_avatar_small.jpg" alt="">    </div>
+            <img src="/uploads/avatar/noavatar_small.gif" alt="">    </div>
     </div>
         <?php
         $form = ActiveForm::begin([
@@ -57,13 +57,15 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="fileinput fileinput-new" data-provides="fileinput">
             <div class="fileinput-new thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
-                <img src="/uploads/avatar/000/02/88/93_avatar_big.jpg" alt="">  </div>
+                <img src="/uploads/avatar/noavatar_middle.gif" alt="">  </div>
             <div class="fileinput-preview fileinput-exists thumbnail" style="line-height: 10px;"></div>
             <div>
                 <span class="btn btn-default btn-file">
                     <span class="fileinput-new">选择头像</span>
                     <span class="fileinput-exists">重新选择</span>
-                    <input type="hidden" name="AvatarForm[file]" value=""><input type="file" id="avatarform-file" name="AvatarForm[file]">      </span>
+                    <input type="hidden" name="AvatarForm[file]" value="">
+                    <input type="file" id="avatarform-file" name="AvatarForm[file]">      
+                </span>
                 <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">取消</a>
                 <button type="submit" class="btn btn-primary">修改</button> 
             </div>
@@ -73,7 +75,7 @@ use yii\widgets\ActiveForm;
     ?>
 
 <script type="text/javascript">
-jQuery(document).ready(function () {
+$(document).ready(function () {
 $(".fileinput").fileinput().on("change.bs.fileinput", function(){
     $(".fileinput-preview img").Jcrop({
         aspectRatio: 1,

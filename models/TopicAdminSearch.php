@@ -16,7 +16,7 @@ class TopicAdminSearch extends TopicAdmin
     {
         return [
             [['id', 'status', 'create_time', 'update_time', 'author_id', 'viewcount', 'up', 'classify'], 'integer'],
-            [['title', 'content', 'describe', 'tags'], 'safe'],
+            [['title', 'content', 'describe', 'tags','tag'], 'safe'],
         ];
     }
 

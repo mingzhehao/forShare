@@ -1,8 +1,5 @@
 <?php
 use yii\helpers\Html;
-use app\models\TopicAdmin;
-use app\models\Tag;
-use app\controllers\TopicAdminController ;
 
 /**
  * @var \yii\web\View $this
@@ -11,16 +8,15 @@ use app\controllers\TopicAdminController ;
  * @var string $content
  */
 //$activeGenerator = Yii::$app->controller->generator;
-$activeGenerator = isset($_GET['id'])?$_GET['id']:'1';
 
-/***分类总数****/
-$category = TopicAdminController::category(); 
-/**分类名称获取 继承自BaseModel**/
-$topicClassify = TopicAdmin::topicClassify();
-/*热门文章*/
-$hotPosts = TopicAdmin::getHotPosts();
-/*热门标签*/
-$tags =Tag::findTagWeights(20);
+
+/*
+ *  如果url中传递的id存在，判断是否是当前登录用户，
+ *  $userid == Yii::$app->user->id;
+ *  1.是当前用户调用模块为1，
+ *  2.不是当前模块调用模块为2
+ */
+$userid = isset($_GET['id'])?$_GET['id']:Yii::$app->user->id;//url中的id
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
@@ -31,91 +27,61 @@ $tags =Tag::findTagWeights(20);
 }
 </style>
 <div class="row">
-    <div class="col-md-9 col-sm-8">
-        <?= $content ?>
-    </div>
+    <div class="col-lg-3 sidebar">
+        <div class="well">
+            <div class="media">
+                <div class="pull-left">
+                    <img class="media-object" src="/images/noavatar_middle.gif" alt="" style="width: 100px; height: 100px;">
+                </div>                
+                <div class="media-body">
+                    <?php if($userid == Yii::$app->user->id){ ?>
+                        <h2><?php  echo Yii::$app->user->getIdentity()->username; ?></h2>
+                        <span class="glyphicon glyphicon-home"></span> <a href="/User/<?php echo $userid; ?>">个人主页</a><br>
 
-    <div class="col-md-3 col-sm-4">
-        <a class="btn btn-success btn-lg btn-block" href="/topic-admin/create"><span class="glyphicon glyphicon-plus"></span> 发布主题</a>
-        <?php
-            /***片段缓存----分类****/
-            if ($this->beginCache('topic-classify', ['duration' => 3600])) {
-                $echo = '<div id="w2" class="list-group"><a class="list-group-item active" href="/topic"><span class="badge">{totalnum}</span>全部主题</a>';
-                $totalnum = 0;
-                foreach ($category as $key => $val)
-                {
-                    $echo .= '<a class="list-group-item" href="/topic-admin/index?classify='.$val['classify'].'"><span class="badge">'.$val['counts'].'</span>'.$topicClassify[$val["classify"]].'</a>';
-                    $totalnum += $val['counts'];
-                } 
-                $echo = str_replace('{totalnum}',$totalnum,$echo);
-                echo $echo;
-                $this->endCache();
-            }
-        ?>
-                <a class="list-group-item" href="/topic?category=1"><span class="badge">2510</span>新手入门</a>
-                <a class="list-group-item" href="/topic?category=2"><span class="badge">30</span>求助交流</a>
-                <a class="list-group-item" href="/topic?category=3"><span class="badge">66</span>技术分享</a>
-                <a class="list-group-item" href="/topic?category=4"><span class="badge">9</span>站务公告</a>
-                <a class="list-group-item" href="/topic?category=5"><span class="badge">29</span>求职招聘</a>
+                        <span class="glyphicon glyphicon-cog"></span> <a href="/User/setting">帐户设置</a><br>
+                        <span class="glyphicon glyphicon-camera"></span> <a href="/User/avatar">修改头像</a>
+                    <?php }else{ ?>
+                        <h2>HelloBugKiller</h2>
+                        <span class="glyphicon glyphicon-home"></span> <a href="/user/<?php echo $userid; ?>">个人主页</a><br>
+                        <span class="glyphicon glyphicon-envelope"></span> <a href="/user/message/create?id=<?php echo $userid; ?>">发送私信</a><br>
+                        <span class="glyphicon glyphicon-bookmark"></span> <a class="follow" href="/follow?id=<?php echo $userid; ?>">点击关注</a>         
+                        <?php } ?>
+                        </div>
+                </div>
+                <div class="media-footer">
+                    <a href="/User/<?php echo $userid; ?>/follow">关注(0)</a>                <em>|</em> 
+                    <a href="/User/<?php echo $userid; ?>/fans">粉丝(0)</a>                <em>|</em>
+                    <a href="/rule">积分(80)</a>            
+                </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading">热门主题</div>
+                <div class="panel-heading">关注<span class="pull-right"><a href="/User/<?php echo $model->id; ?>/follow">全部关注</a></span></div>
                 <div class="panel-body">
-                    <ul class="list">
-                    <?php 
-                        if ($this->beginCache('topic-hotposts', ['duration' => 3600])) {
-                            $echo = '';
-                            foreach($hotPosts as $key => $val)
-                            {   
-                                $echo .= '<li><a href="/topic-admin/view?id='.$val[id].'" title="" data-toggle="tooltip" data-original-title="'.$val[title].'">'.$val[title].'</a></li>';
-                            }
-                            echo $echo;
-                            $this->endCache();
-                        }
-                    ?>
+                    <ul class="avatar-list">
                     </ul>
                 </div>
             </div>
 
             <div class="panel panel-default">
-                <div class="panel-heading">热门标签</div>
+                <div class="panel-heading">粉丝<span class="pull-right"><a href="/User/<?php echo $userid;?>/fans">全部粉丝</a></span></div>
                 <div class="panel-body">
-                    <ul class="tag-list">
-                    <?php 
-                        if ($this->beginCache('topic-hottags', ['duration' => 3600])) {
-                            $echo = '';
-                            $label = array('label-default','label-primary','label-success','label-warning','label-info');
-                            foreach($tags as $tag=>$weight)
-                            {
-                                $echo .= '<li><span class="label '.$label[rand(0,4)].'">';
-                                $echo .= Html::a(Html::encode($tag), ['topic-admin/index','tag'=>$tag]);
-                                $echo .= '</span></li>';
-                            }
-                            echo $echo;
-                            $this->endCache();
-                        }
-                    ?>
-                    </ul>   
+                    <ul class="avatar-list">
+                                        </ul>
                 </div>
             </div>
 
             <div class="panel panel-default">
-                <div class="panel-heading">活跃会员</div>
+                <div class="panel-heading">最近访客<span class="pull-right"><a href="/User/<?php echo $userid;?>/visit">全部访客</a></span></div>
                 <div class="panel-body">
-                    <ul class="avatar-list">
-                                    <li><a href="/user/821" data-original-title="" title=""><img src="/uploads/avatar/000/00/08/21_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/2" data-original-title="" title=""><img src="/uploads/avatar/000/00/00/02_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/5795" data-original-title="" title=""><img src="/uploads/avatar/000/00/57/95_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/13302" data-original-title="" title=""><img src="/uploads/avatar/000/01/33/02_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/3535" data-original-title="" title=""><img src="/uploads/avatar/000/00/35/35_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/49" data-original-title="" title=""><img src="/uploads/avatar/000/00/00/49_avatar_small.jpg" alt=""></a></li>
-                                    </ul>
-                    </div>
+                    <ul class="media-list">
+                                        </ul>
                 </div>
             </div>
-
-
         </div>
-    </div>
-    <?php $this->endContent(); ?>
+
+        <div class="col-md-9 col-sm-8">
+            <?= $content ?>
+        </div>
+</div>
+        <?php $this->endContent(); ?>
 

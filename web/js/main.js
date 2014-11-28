@@ -333,5 +333,3 @@ function strip_tags(input, allowed) {
     });
 }
 
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4a3af5cc318b92f2687be7ab6567a45c' type='text/javascript'%3E%3C/script%3E"));

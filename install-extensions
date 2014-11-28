@@ -6,3 +6,17 @@
 
 #执行这步前 要修改 composer.json 中  "minimum-stability": "dev",
 2. php composer.phar require kartik-v/yii2-markdown "dev-master"
+
+
+
+
+注意：
+ 1.比如以前扩展我都已经安装了，现在我发现了ueditor编辑器，想要安装，
+  一般新安装的扩展都会和原有的发生冲突导致无法安装，
+  需要在另一套纯净版yii2 开始安装ueditor，这样一般都会安装成功
+  安装成功ueditor后， 怎么整合到现在的项目中呢？
+    a.将ueditor源代码数据copy到项目 执行目录中 （ 比如vendor下）
+    b.调整composer.json 添加扩展信息    ("xj/yii2-ueditor-widget": "*",)
+    c.需要autoload namespace 不然系统无法识别 vendor/composer/autoload_psr4.php 将ueditor在纯净版这个文件中的配置，
+    添加到项目中这个文件的同一位置。这样就可以正常使用扩展的namespace了
+
