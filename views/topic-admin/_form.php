@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\markdown\MarkdownEditor;
+use xj\ueditor\Ueditor;
 
 /**
  * @var yii\web\View $this
@@ -20,11 +21,36 @@ use kartik\markdown\MarkdownEditor;
     <?= $form->field($model, 'title')->textInput(['maxlength' => 128]) ?>
 
     <?php
+       //  echo $form->field($model, 'content')->widget(
+       //     MarkdownEditor::classname(), 
+       //     ['height' => 300, 'encodeLabels' => false]
+       // );
+    ?>
+
+    <?php
          echo $form->field($model, 'content')->widget(
-            MarkdownEditor::classname(), 
-            ['height' => 300, 'encodeLabels' => false]
+            Ueditor::classname(), 
+            [
+                /**
+                  * important:注意
+                  * attribute name value 如果开启会影响数据，不开启获取的才是$model的属性以及数据.
+                  */
+                //'attribute' => 'content',
+                //'name' => 'content',
+                //'value' => '',
+                'style' => 'width:100%;height:400px',
+                'renderTag' => true,
+                //'readyEvent' => 'console.log("example2 ready")',
+                'jsOptions' => [
+                    'serverUrl' => yii\helpers\Url::to(['upload']),
+                    'autoHeightEnable' => true,
+                    'autoFloatEnable' => true
+                    ],
+                
+            ]
         );
     ?>
+
 
     <?= $form->field($model, 'describe')->textInput(['maxlength' => 1024]) ?>
 

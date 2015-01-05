@@ -7,7 +7,8 @@
 #执行这步前 要修改 composer.json 中  "minimum-stability": "dev",
 2. php composer.phar require kartik-v/yii2-markdown "dev-master"
 
-
+3.ueditor 的安装  这个也需要顺序，需要和0步骤处理  区分下先后
+    php composer.phar require xj/yii2-ueditor-widget" "*"
 
 
 注意：
@@ -19,4 +20,6 @@
     b.调整composer.json 添加扩展信息    ("xj/yii2-ueditor-widget": "*",)
     c.需要autoload namespace 不然系统无法识别 vendor/composer/autoload_psr4.php 将ueditor在纯净版这个文件中的配置，
     添加到项目中这个文件的同一位置。这样就可以正常使用扩展的namespace了
+
+    important:我发现最简单是 直接copy vendor目录所以文件  以及 composer.json 最方便,前提  copy的vendor都是可使用的
 

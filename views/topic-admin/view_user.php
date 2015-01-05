@@ -39,21 +39,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <?php
-//Widget直接渲染Tag
-echo \xj\ueditor\Ueditor::widget([
-    'model' => $model->content,
-    'attribute' => 'password',
-    'name' => 'customName',
-    'value' => 'content',
-    'style' => 'width:100%;height:400px',
-    'renderTag' => true,
-    'readyEvent' => 'console.log("example2 ready")',
-    'jsOptions' => [
-        'serverUrl' => yii\helpers\Url::to(['upload']),
-        'autoHeightEnable' => true,
-        'autoFloatEnable' => true
-    ],
-]);
+#//Widget直接渲染Tag
+#echo \xj\ueditor\Ueditor::widget([
+#    'model' => $model->content,
+#    'attribute' => 'password',
+#    'name' => 'customName',
+#    'value' => 'content',
+#    'style' => 'width:100%;height:400px',
+#    'renderTag' => true,
+#    'readyEvent' => 'console.log("example2 ready")',
+#    'jsOptions' => [
+#        'serverUrl' => yii\helpers\Url::to(['upload']),
+#        'autoHeightEnable' => true,
+#        'autoFloatEnable' => true
+#    ],
+#]);
 ?>
 
 
