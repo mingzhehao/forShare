@@ -129,6 +129,13 @@ $config = [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
                 'rbac-admin/*', // add or remove allowed actions to this list
+                'site/*',
+                'user/*',
+                'topic-admin/*',
+                'music/*',
+                'humour/*',
+                'upload/*',
+                'markdown/parse/download',//需要开启,不然影响markdown
         ]
     ],
 

@@ -39,4 +39,36 @@ class BaseModel extends \yii\db\ActiveRecord
             );
         return $licenses;
     }
+
+    /*
+     * music话题讨论定义分类
+     * 1.可以使用数据库
+     * 2.也可以使用自定义数组
+     */
+    public function musicClassify()
+    {
+        $licenses = array(
+            '1' => '流行音乐',
+            '2' => '古典音乐',
+            '3' => '韩日音乐',
+            '4' => '国内音乐',
+            );
+        return $licenses;
+    }
+
+    /*
+     * music话题讨论定义分类
+     * 1.可以使用数据库
+     * 2.也可以使用自定义数组
+     */
+    public function humourClassify()
+    {
+        $licenses = array(
+            '1' => '原创趣事',
+            '2' => '转载趣事',
+            '3' => '精华趣事',
+            '4' => '经典趣事',
+            );
+        return $licenses;
+    }
 }

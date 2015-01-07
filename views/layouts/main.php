@@ -40,10 +40,12 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => '登录', 'url' => ['/site/login']];
                 $menuItems[] = ['label' => '注册', 'url' => ['/site/signup']];
             } else {
-                $menuItems[] = ['label' => 'CRUD管理', 'url' => ['/admin/view']];
+                //$menuItems[] = ['label' => 'CRUD管理', 'url' => ['/admin/view']];
+                //$menuItems[] = ['label' => '分类管理', 'url' => ['/classify/index']];
                 $menuItems[] = ['label' => '用户管理', 'url' => ['/user/index']];
-                $menuItems[] = ['label' => '分类管理', 'url' => ['/classify/index']];
-                $menuItems[] = ['label' => '话题管理', 'url' => ['/topic-admin/index']];
+                $menuItems[] = ['label' => '音乐欣赏', 'url' => ['/music/index']];
+                $menuItems[] = ['label' => '分享趣事', 'url' => ['/humour/index']];
+                $menuItems[] = ['label' => '话题讨论', 'url' => ['/topic-admin/index']];
                 $menuItems[] = [
                     'label' => '退出 (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/site/logout'],
