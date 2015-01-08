@@ -19,7 +19,7 @@ $topicClassify = TopicAdmin::topicClassify();
 /*热门文章*/
 $hotPosts = TopicAdmin::getHotPosts();
 /*热门标签*/
-$tags =Tag::findTagWeights(20);
+$tags =Tag::findTagWeights(20,'topic');
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>

@@ -58,9 +58,10 @@ class Tag extends \yii\db\ActiveRecord
      * @param integer the maximum number of tags that should be returned
      * @return array weights indexed by tag names.
      */
-    public function findTagWeights($limit=20)
+    public function findTagWeights($limit=20,$classify_type='topic')
     {
         $models=Tag::find()
+            ->where(['classify_type'=>$classify_type])
             ->orderBy('frequency DESC')
             ->limit($limit)
             ->all();

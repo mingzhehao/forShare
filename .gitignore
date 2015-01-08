@@ -25,3 +25,6 @@ composer.phar
 phpunit.phar
 # local phpunit config
 /phpunit.xml
+
+#不要web目录下upload目录下的
+web/uploads

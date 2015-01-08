@@ -19,7 +19,7 @@ $musicClassify = Music::musicClassify();
 /*热门文章*/
 $hotPosts = Music::getHotPosts();
 /*热门标签*/
-$tags =Tag::findTagWeights(20);
+$tags =Tag::findTagWeights(20,'music');
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>

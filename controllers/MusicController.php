@@ -17,6 +17,36 @@ use yii\data\ActiveDataProvider;
  */
 class MusicController extends Controller
 {
+    public function actions() {
+        return [
+            'upload' => [
+                'class' => \xj\ueditor\actions\Upload::className(),
+                'uploadBasePath' => '@webroot/uploads', //file system path
+                'uploadBaseUrl' => '/uploads', //web path
+                'csrf' => true, //csrf校验
+                'configPatch' => [
+                    'imageMaxSize' => 2000 * 1024, //图片
+                    'scrawlMaxSize' => 500 * 1024, //涂鸦
+                    'catcherMaxSize' => 500 * 1024, //远程
+                    'videoMaxSize' => 1024 * 1024, //视频
+                    'fileMaxSize' => 1024 * 1024, //文件
+                    'imageManagerListPath' => '/', //图片列表
+                    'fileManagerListPath' => '/', //文件列表
+                ],
+                'pathFormat' => [
+                    'imagePathFormat' => 'image/{yyyy}{mm}{dd}/{time}{rand:6}',
+                    'scrawlPathFormat' => 'image/{yyyy}{mm}{dd}/{time}{rand:6}',
+                    'snapscreenPathFormat' => 'image/{yyyy}{mm}{dd}/{time}{rand:6}',
+                    'snapscreenPathFormat' => 'image/{yyyy}{mm}{dd}/{time}{rand:6}',
+                    'catcherPathFormat' => 'image/{yyyy}{mm}{dd}/{time}{rand:6}',
+                    'videoPathFormat' => 'video/{yyyy}{mm}{dd}/{time}{rand:6}',
+                    'filePathFormat' => 'file/{yyyy}{mm}{dd}/{time}{rand:6}',
+                ],
+            ],
+        ];
+    }
+
+
     public function behaviors()
     {
         return [
@@ -38,30 +68,6 @@ class MusicController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
-                ],
-            ],
-            'upload' => [
-                'class' => \xj\ueditor\actions\Upload::className(),
-                'uploadBasePath' => '@web', //file system path
-                'uploadBaseUrl' => '@web', //web path
-                'csrf' => true, //csrf校验
-                'configPatch' => [
-                    'imageMaxSize' => 500 * 1024, //图片
-                    'scrawlMaxSize' => 500 * 1024, //涂鸦
-                    'catcherMaxSize' => 500 * 1024, //远程
-                    'videoMaxSize' => 1024 * 1024, //视频
-                    'fileMaxSize' => 1024 * 1024, //文件
-                    'imageManagerListPath' => '/', //图片列表
-                    'fileManagerListPath' => '/', //文件列表
-                ],
-                'pathFormat' => [
-                    'imagePathFormat' => 'images/image/{yyyy}{mm}{dd}/{time}{rand:6}',
-                    'scrawlPathFormat' => 'images/scrawl/{yyyy}{mm}{dd}/{time}{rand:6}',
-                    'snapscreenPathFormat' => 'images/snapscreen/{yyyy}{mm}{dd}/{time}{rand:6}',
-                    'snapscreenPathFormat' => 'images/snapscreen/{yyyy}{mm}{dd}/{time}{rand:6}',
-                    'catcherPathFormat' => 'images/catcher/{yyyy}{mm}{dd}/{time}{rand:6}',
-                    'videoPathFormat' => 'videos/{yyyy}{mm}{dd}/{time}{rand:6}',
-                    'filePathFormat' => 'files/{yyyy}{mm}{dd}/{time}{rand:6}',
                 ],
             ],
             /*            [

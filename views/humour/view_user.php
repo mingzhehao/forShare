@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="topic-admin-view">
 
     <h1><?= Html::encode($this->title) ?> <small><?= Html::encode($model->classify) ?></small></h1>
+    <?php if(Yii::$app->user->getIdentity()->role === 1) { ?>
     <p>
         <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('删除', ['delete', 'id' => $model->id], [
@@ -27,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
+    <?php } ?>
     <div class="action">
         <span class="user"><a href="/user/28698"><span class="glyphicon glyphicon-user"></span><?= Html::encode($model->uname->username) ?></a></span>
         <span class="time"><span class="glyphicon glyphicon-time"></span> <?= Html::encode($model->update_time) ?></span>

@@ -42,7 +42,7 @@ use xj\ueditor\Ueditor;
                 'renderTag' => true,
                 //'readyEvent' => 'console.log("example2 ready")',
                 'jsOptions' => [
-                    'serverUrl' => yii\helpers\Url::to(['/upload/upload']),
+                    'serverUrl' => yii\helpers\Url::to(['upload']),
                     'autoHeightEnable' => true,
                     'autoFloatEnable' => true
                     ],

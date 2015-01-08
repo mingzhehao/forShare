@@ -14,13 +14,22 @@
                 ],
         e.后台添加rules  示例： name：admin ;class:\app\rbac\GlobalRule ,rbac\GlobalRule.php 要先建立 rbac目录 及GlobalRule.php文件
 
-1. php composer.phar require kartik-v/yii2-widgets "dev-master"
+1.ueditor 的安装  这个也需要顺序，需要和0步骤处理  区分下先后
+    php composer.phar require xj/yii2-ueditor-widget "*"
+    a.扩展中存在一个问题，
+        对路径的判断问题，在Uploader.php 310行 下面是我调整的
+       if ( (substr($fullname, 0, 1) != '/') && (substr($rootPath, -1, 1) !='/')  ) { 
+            $fullname = '/' . $fullname; 
+        }
+        return $rootPath . $fullname;
+    b.上传建立的目录时候 比如web/uploads/image  要chown -R nginx:nginx 授权  不然无权限创建
+                    
+
+2. php composer.phar require kartik-v/yii2-widgets "dev-master"
 
 #执行这步前 要修改 composer.json 中  "minimum-stability": "dev",
-2. php composer.phar require kartik-v/yii2-markdown "dev-master"
+3. php composer.phar require kartik-v/yii2-markdown "dev-master"
 
-3.ueditor 的安装  这个也需要顺序，需要和0步骤处理  区分下先后
-    php composer.phar require xj/yii2-ueditor-widget" "*"
 
 
 

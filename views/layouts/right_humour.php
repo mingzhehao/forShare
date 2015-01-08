@@ -19,7 +19,7 @@ $humourClassify = Humour::humourClassify();
 /*热门文章*/
 $hotPosts = Humour::getHotPosts();
 /*热门标签*/
-$tags =Tag::findTagWeights(20);
+$tags =Tag::findTagWeights(20,'humour');
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
@@ -38,7 +38,7 @@ $tags =Tag::findTagWeights(20);
         <a class="btn btn-success btn-lg btn-block" href="/humour/create"><span class="glyphicon glyphicon-plus"></span> 发布主题</a>
         <?php
             /***片段缓存----分类****/
-            if ($this->beginCache('humour-classify', ['duration' => 3600])) {
+            if ($this->beginCache('humour-classify', ['duration' => 10])) {
                 $echo = '<div id="w2" class="list-group"><a class="list-group-item active" href="/humour"><span class="badge">{totalnum}</span>全部主题</a>';
                 $totalnum = 0;
                 foreach ($category as $key => $val)
@@ -62,7 +62,7 @@ $tags =Tag::findTagWeights(20);
                 <div class="panel-body">
                     <ul class="list">
                     <?php 
-                        if ($this->beginCache('humour-hotposts', ['duration' => 3600])) {
+                        if ($this->beginCache('humour-hotposts', ['duration' => 10])) {
                             $echo = '';
                             foreach($hotPosts as $key => $val)
                             {   
@@ -81,7 +81,7 @@ $tags =Tag::findTagWeights(20);
                 <div class="panel-body">
                     <ul class="tag-list">
                     <?php 
-                        if ($this->beginCache('humour-hottags', ['duration' => 3600])) {
+                        if ($this->beginCache('humour-hottags', ['duration' => 10])) {
                             $echo = '';
                             $label = array('label-default','label-primary','label-success','label-warning','label-info');
                             foreach($tags as $tag=>$weight)
