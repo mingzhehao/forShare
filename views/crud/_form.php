@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
  */
 ?>
 
-<div class="admin-form">
+<div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
 

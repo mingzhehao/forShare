@@ -11,7 +11,7 @@ $this->title = '创建';
 $this->params['breadcrumbs'][] = ['label' => '用户', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="admin-create">
+<div class="user-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

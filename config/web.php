@@ -131,10 +131,13 @@ $config = [
                 'rbac-admin/*', // add or remove allowed actions to this list
                 'site/*',
                 'user/*',
+                'gii/*',
+                'admin/*',
                 'topic-admin/*',
                 'music/*',
                 'humour/*',
                 'upload/*',
+                'crud/*',
                 'markdown/parse/download',//需要开启,不然影响markdown
         ]
     ],

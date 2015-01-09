@@ -42,7 +42,7 @@ AppAsset::register($this);
             } else {
                 //$menuItems[] = ['label' => 'CRUD管理', 'url' => ['/admin/view']];
                 //$menuItems[] = ['label' => '分类管理', 'url' => ['/classify/index']];
-                $menuItems[] = ['label' => '用户管理', 'url' => ['/user/index']];
+                $menuItems[] = ['label' => '用户管理', 'url' => ['/admin/index']];
                 $menuItems[] = ['label' => '音乐欣赏', 'url' => ['/music/index']];
                 $menuItems[] = ['label' => '分享趣事', 'url' => ['/humour/index']];
                 $menuItems[] = ['label' => '话题讨论', 'url' => ['/topic-admin/index']];

@@ -1,53 +1,74 @@
 <?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\grid\DataColumn;
+
 /**
  * @var yii\web\View $this
+ * @var yii\data\ActiveDataProvider $dataProvider
+ * @var app\models\AdminSearch $searchModel
  */
-$this->title = 'My Yii Application';
+
+$this->title = '用户';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
+<div class="admin-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+    <p>
+        <?= Html::a('创建', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-    <div class="body-content">
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+            'id',
+            'username',
+            //'auth_key',
+            //'password_hash',
+            //'password_reset_token',
+            'email:email',
+            [  
+                'class' => DataColumn::className(),
+                'attribute' => 'role', 
+                'format' => 'text',
+                'value' => function($data){
+                        if($data->role=='1')
+                            return "管理员";
+                        else
+                            return "会员";
+                     },
+            ],
+            [  
+                'attribute' => 'status', 
+                'format' => 'text',
+                'value' => function($data){
+                        if($data->status=='0')
+                            return "删除";
+                        else
+                            return "活跃";
+                     },
+            ],
+            [  
+                'attribute' => 'created_at', 
+                'format' => 'text',
+                'value' => function($data){return date("Y-m-d H:i:s",($data->created_at));},
+            ],
+            [  
+                'attribute' => 'updated_at', 
+                'format' => 'text',
+                'value' => function($data){return date("Y-m-d H:i:s",($data->updated_at));},
+            ],
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
 </div>

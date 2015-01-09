@@ -24,7 +24,7 @@ $activeGenerator = isset($_GET['id'])?$_GET['id']:'add';
             <?php
             foreach ($generators as $id => $generator) {
                 $label = '<i class="glyphicon glyphicon-chevron-right"></i>' . Html::encode($generator);
-                echo Html::a($label, ['admin/view', 'id' => $id], [
+                echo Html::a($label, ['crud/view', 'id' => $id], [
                     'class' => $id === $activeGenerator ? 'list-group-item active' : 'list-group-item',
                 ]);
             }

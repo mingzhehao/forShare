@@ -1,114 +1,121 @@
 <?php
+
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
+use app\models\Admin;
+use app\models\AdminSearch;
 use yii\web\Controller;
-use common\models\LoginForm;
+use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * Site controller
+ * AdminController implements the CRUD actions for Admin model.
  */
 class AdminController extends Controller
 {
-    //public $layout = 'left_panel';
-    public $layout = 'left_panel';
-
-    public $generator ;
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index','view'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
     }
 
     /**
-     * @inheritdoc
+     * Lists all Admin models.
+     * @return mixed
      */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
-
     public function actionIndex()
     {
-        $this->layout = 'main';
-        return $this->render('index');
-    }
+        $searchModel = new AdminSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-    public function actionView()
-    {
-        return $this->render('view');
-        $generator = $this->loadGenerator($id);
-        $params = ['generator' => $generator, 'id' => $id];
-        if (isset($_POST['preview']) || isset($_POST['generate'])) {
-            if ($generator->validate()) {
-                $generator->saveStickyAttributes();
-                $files = $generator->generate();
-                if (isset($_POST['generate']) && !empty($_POST['answers'])) {
-                    $params['hasError'] = $generator->save($files, (array) $_POST['answers'], $results);
-                    $params['results'] = $results;
-                } else {
-                    $params['files'] = $files;
-                    $params['answers'] = isset($_POST['answers']) ? $_POST['answers'] : null;
-                }
-            }
-        }
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
-
 
     /**
-     * Loads the generator with the specified ID.
-     * @param  string                $id the ID of the generator to be loaded.
-     * @return \yii\gii\Generator    the loaded generator
-     * @throws NotFoundHttpException
+     * Displays a single Admin model.
+     * @param integer $id
+     * @return mixed
      */
-    protected function loadGenerator($id='index')
+    public function actionView($id)
     {
-        if (isset($id)&& !empty($id)) {
-            $this->generator = '';
-            return $this->generator;
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Admin model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Admin();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            throw new NotFoundHttpException("Code generator not found: $id");
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
     }
 
-    public function generators()
+    /**
+     * Updates an existing Admin model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
     {
-        return array(
-                'add'       =>  '添加',
-                'update'    =>  '更新',
-                'select'    =>  '修改',
-                'delete'    =>  '删除',
-            );
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
+    /**
+     * Deletes an existing Admin model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
 
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Admin model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Admin the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Admin::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }

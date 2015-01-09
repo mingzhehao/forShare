@@ -1,5 +1,9 @@
 <?php
-
+/**
+  * 用户管理 
+  * 防止和用户基本信息使用重名  所以改用admin 进行用户管理控制
+  *
+  */
 namespace app\controllers;
 
 use Yii;
