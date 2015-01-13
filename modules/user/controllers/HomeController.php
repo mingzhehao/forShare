@@ -12,7 +12,7 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\helpers\Url;
 
-use app\models\UploadForm;
+use app\modules\user\models\CropAvatar;
 use yii\web\UploadedFile;
 
 class HomeController extends Controller
@@ -80,38 +80,21 @@ class HomeController extends Controller
         $this->layout = 'left_user_setting';
 
         if (Yii::$app->request->isPost) {
-            $files = UploadedFile::getInstances($model, 'file');
-            var_dump($files);exit;
-
-            foreach ($files as $file) {
-
-                $_model = new UploadForm();
-
-                $_model->file = $file;
-
-                if ($_model->validate()) {
-                    $_model->file->saveAs('uploads/' . $_model->file->baseName . '.' . $_model->file->extension);
-                } else {
-                    foreach ($_model->getErrors('file') as $error) {
-                        $model->addError('file', $error);
-                    }
-                }
-            }
-
-            if ($model->hasErrors('file')){
-                $model->addError(
-                    'file',
-                    count($model->getErrors('file')) . ' of ' . count($files) . ' files not uploaded'
-                );
-            }
+            $postAvatar = Yii::$app->request->post();
+            $crop = new CropAvatar($postAvatar['avatar_src'], $postAvatar['avatar_data'], $_FILES['avatar_file']);
+            $response = array(
+                'state'  => 200,
+                'message' => $crop -> getMsg(),
+                'result' => $crop -> getResult()
+            );
 
         }
 
-        return $this->render('avatar', ['model' => $model]);
+        return $this->render('avatarCropper', ['model' => $model]);
 
 
 
-        $model = new UploadForm();
+        $model = new CropAvatar();
         if (Yii::$app->request->isPost) {
             var_dump($_POST);exit;
             //$model->file = UploadedFile::getInstance($model, 'file');

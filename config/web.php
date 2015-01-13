@@ -130,7 +130,7 @@ $config = [
         'allowActions' => [
                 'rbac-admin/*', // add or remove allowed actions to this list
                 'site/*',
-                'user/*',
+                'User/*',
                 'gii/*',
                 'admin/*',
                 'topic-admin/*',
