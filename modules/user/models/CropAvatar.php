@@ -6,6 +6,11 @@ namespace app\modules\user\models;
  * UploadForm is the model behind the upload form.
  */
 
+/** 
+ * modify yun.song1989@gmail.com   2015-01-15
+ * 调整支持默认生成三种图像，small，middle，big 可设定值
+ */
+
 class CropAvatar {
     private $src;
     private $data;
@@ -13,8 +18,14 @@ class CropAvatar {
     private $dst;
     private $type;
     private $extension;
-    private $srcDir = 'images/cropper';
-    private $dstDir = 'images/avatar';
+    private $smallWidth  = '48';
+    private $smallHeight = '48';
+    private $middleWidth = '120';
+    private $middleHeight= '120';
+    private $bigWidth    = '200';
+    private $bigHeight   = '200';
+    private $srcDir = 'images/cropper';//上传的原图
+    private $dstDir = 'images/avatar';//修改后的目标图
     private $msg;
 
     function __construct($src, $data, $file) {
@@ -116,36 +127,43 @@ class CropAvatar {
                 $this -> msg = "Failed to read the image file";
                 return;
             }
-
-            $dst_img = imagecreatetruecolor(220, 220);
-            $result = imagecopyresampled($dst_img, $src_img, 0, 0, $data -> x, $data -> y, 220, 220, $data -> width, $data -> height);
-
-            if ($result) {
-                switch ($this -> type) {
-                    case IMAGETYPE_GIF:
-                        $result = imagegif($dst_img, $dst);
-                        break;
-
-                    case IMAGETYPE_JPEG:
-                        $result = imagejpeg($dst_img, $dst);
-                        break;
-
-                    case IMAGETYPE_PNG:
-                        $result = imagepng($dst_img, $dst);
-                        break;
-                }
-
-                if (!$result) {
-                    $this -> msg = "Failed to save the cropped image file";
-                }
-            } else {
-                $this -> msg = "Failed to crop the image file";
-            }
-
+            $dst = explode('.',$dst);
+            $this->createImages($src_img,$dst['0'].'_small.'.$dst['1'],$data,$this->smallWidth,$this->smallHeight);/*第一张小图生成*/
+            $this->createImages($src_img,$dst['0'].'_middle.'.$dst['1'],$data,$this->middleWidth,$this->middleHeight);/*第二张小图生成*/
+            $this->createImages($src_img,$dst['0'].'_big.'.$dst['1'],$data,$this->bigWidth,$this->bigHeight);/*第三张小图生成*/
             imagedestroy($src_img);
-            imagedestroy($dst_img);
         }
     }
+
+    private function createImages($src_img,$dst,$data,$width,$height)
+    {
+        $dst_img = imagecreatetruecolor($width,$height);
+        $result = imagecopyresampled($dst_img, $src_img, 0, 0, $data -> x, $data -> y, $width,$height, $data -> width, $data -> height);
+
+        if ($result) {
+            switch ($this -> type) {
+                case IMAGETYPE_GIF:
+                    $result = imagegif($dst_img, $dst);
+                    break;
+
+                case IMAGETYPE_JPEG:
+                    $result = imagejpeg($dst_img, $dst);
+                    break;
+
+                case IMAGETYPE_PNG:
+                    $result = imagepng($dst_img, $dst);
+                    break;
+            }
+
+            if (!$result) {
+                $this -> msg = "Failed to save the cropped image file";
+            }
+        } else {
+            $this -> msg = "Failed to crop the image file";
+        }
+        imagedestroy($dst_img);
+    }
+
 
     private function codeToMessage($code) {
         switch ($code) {

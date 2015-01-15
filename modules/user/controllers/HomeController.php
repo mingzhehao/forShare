@@ -82,11 +82,14 @@ class HomeController extends Controller
         if (Yii::$app->request->isPost) {
             $postAvatar = Yii::$app->request->post();
             $crop = new CropAvatar($postAvatar['avatar_src'], $postAvatar['avatar_data'], $_FILES['avatar_file']);
+            $result = explode('.',$crop -> getResult());
+            $result = '/'.$result['0'].'_big.'.$result['1'];/*添加/进行输出*/
             $response = array(
                 'state'  => 200,
                 'message' => $crop -> getMsg(),
-                'result' => $crop -> getResult()
+                'result' => $result
             );
+            echo(json_encode($response));exit;
 
         }
 
