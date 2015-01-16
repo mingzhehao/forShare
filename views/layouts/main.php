@@ -69,9 +69,11 @@ AppAsset::register($this);
                      </form>';
             if(!Yii::$app->user->isGuest)
             {
+                $userImage = explode('.',Yii::$app->user->getIdentity()->file);
+                $userImage = $userImage['0'].'_small.'.$userImage['1'];
                 echo '<ul id="w5" class="navbar-nav navbar-right nav">
                         <li><a href="/User/notice"><span class="glyphicon glyphicon-envelope"></span> </a></li>
-                        <li class="dropdown"><a class="avatar dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><img src="/images/noavatar_small.gif" width="30" alt=""> <b class="caret"></b></a>
+                        <li class="dropdown"><a class="avatar dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><img src="/'.$userImage.'" width="30" alt=""> <b class="caret"></b></a>
                             <ul id="w6" class="dropdown-menu"><li><a href="/User/home" tabindex="-1"><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
                             <li><a href="/User/setting" tabindex="-1"><span class="glyphicon glyphicon-cog"></span> 帐户设置</a></li>
                             <li><a href="/User/favourite" tabindex="-1"><span class="glyphicon glyphicon-star"></span> 我的收藏</a></li>

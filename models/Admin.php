@@ -86,7 +86,8 @@ class Admin extends \yii\db\ActiveRecord
             {
                 $this->created_at = time();
                 $this->updated_at = time();
-                $this->password_hash = Yii::$app->security->generatePasswordHash($this->password_hash);
+                //$this->password_hash = Yii::$app->security->generatePasswordHash($this->password_hash);
+                $this->password_hash = Yii::$app->security->generatePasswordHash($postData["Admin"]["password_hash"]);
                 $this->auth_key   = Yii::$app->security->generateRandomString();
                 $this->password_reset_token = '';
             }

@@ -18,7 +18,7 @@ use yii\helpers\Url;
     <div class="preview">
         <!-- Current avatar -->
         <div class="avatar-view" title="Change the avatar">
-          <img src="/uploads/avatar/noavatar_middle.gif" alt="Avatar">
+          <img src="<?php echo '/'.$userBigImage;?>" alt="Avatar">
         </div>
     <!--
         <div class="avatar-big">

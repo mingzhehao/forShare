@@ -76,24 +76,33 @@ class HomeController extends Controller
     /*用户头像设置*/
     public function actionAvatar()
     {
-        $model = new User();
+        $model = User::getUserInfo(Yii::$app->user->id);
         $this->layout = 'left_user_setting';
 
         if (Yii::$app->request->isPost) {
             $postAvatar = Yii::$app->request->post();
             $crop = new CropAvatar($postAvatar['avatar_src'], $postAvatar['avatar_data'], $_FILES['avatar_file']);
             $result = explode('.',$crop -> getResult());
-            $result = '/'.$result['0'].'_big.'.$result['1'];/*添加/进行输出*/
+            $resultShow = '/'.$result['0'].'_big.'.$result['1'];/*添加/进行输出*/
             $response = array(
                 'state'  => 200,
                 'message' => $crop -> getMsg(),
-                'result' => $result
+                'result' => $resultShow
             );
+            $model->file = $result['0'].'.'.$result['1'];
+            $model->save();
             echo(json_encode($response));exit;
 
         }
-
-        return $this->render('avatarCropper', ['model' => $model]);
+        
+        $userImage = explode('.',Yii::$app->user->getIdentity()->file);
+        $userMiddleImage = $userImage['0'].'_middle.'.$userImage['1'];
+        $userBigImage = $userImage['0'].'_big.'.$userImage['1'];
+        return $this->render('avatarCropper', [
+                'model' => $model,
+                'userMiddleImage'=>$userMiddleImage,
+                'userBigImage'=>$userBigImage,
+                ]);
 
 
 

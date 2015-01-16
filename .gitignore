@@ -28,3 +28,4 @@ phpunit.phar
 
 #不要web目录下upload目录下的
 web/uploads
+web/images
