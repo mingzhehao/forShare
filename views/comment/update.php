@@ -7,12 +7,12 @@ use yii\helpers\Html;
  * @var app\models\Comment $model
  */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
+$this->title = Yii::t('app', '更新 {modelClass}: ', [
   'modelClass' => 'Comment',
 ]) . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Comments'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', '评论管理'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', '更新');
 ?>
 <div class="comment-update">
 

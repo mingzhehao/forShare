@@ -102,12 +102,8 @@ $tags =Tag::findTagWeights(20,'topic');
                 <div class="panel-heading">活跃会员</div>
                 <div class="panel-body">
                     <ul class="avatar-list">
-                                    <li><a href="/user/821" data-original-title="" title=""><img src="/uploads/avatar/000/00/08/21_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/2" data-original-title="" title=""><img src="/uploads/avatar/000/00/00/02_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/5795" data-original-title="" title=""><img src="/uploads/avatar/000/00/57/95_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/13302" data-original-title="" title=""><img src="/uploads/avatar/000/01/33/02_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/3535" data-original-title="" title=""><img src="/uploads/avatar/000/00/35/35_avatar_small.jpg" alt=""></a></li>
-                                    <li><a href="/user/49" data-original-title="" title=""><img src="/uploads/avatar/000/00/00/49_avatar_small.jpg" alt=""></a></li>
+                                    <li><a href="/User/2" data-original-title="" title=""><img src="/images/avatar/20150205153317_small.jpeg" alt=""></a></li>
+                                    <li><a href="/User/1" data-original-title="" title=""><img src="/images/avatar/20150116135141_small.jpeg" alt=""></a></li>
                                     </ul>
                     </div>
                 </div>

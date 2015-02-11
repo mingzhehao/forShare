@@ -32,9 +32,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'content:ntext',
-            'status',
-            'author_id',
+            [
+                'attribute' => 'status',
+                'label'     => '评论状态',
+                'value'     => function ($data) {
+                    if(!empty($data->status))
+                        return '审核通过';
+                    else
+                        return '等待审核';
+                },
+                'filter'    => [
+                        0 => '等待审核',//key 0  为传递到后台搜索值，值为对外显示值
+                        1 => '审核通过',
+                   ],
+            ],
+            //'author_id',
             'author_name',
+            //['attribute' => 'post_id', 'value' => 'post_id'],
+            [
+                'attribute' => 'post_id',
+                'label' => '文章ID',
+                //'value' => 'post_id',
+                'filter' => yii\helpers\ArrayHelper::map(app\models\Comment::find()->orderBy('id')->asArray()->all(),'post_id','post_id')//第一个post_id 是检索时对外传递值，第二个post_id是对外展示值
+            ],
             // 'comment_parent_id',
             // 'create_time',
             // 'post_id',

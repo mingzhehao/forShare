@@ -28,7 +28,7 @@ class MusicController extends Controller
                     'imageMaxSize' => 2000 * 1024, //图片
                     'scrawlMaxSize' => 500 * 1024, //涂鸦
                     'catcherMaxSize' => 500 * 1024, //远程
-                    'videoMaxSize' => 1024 * 1024, //视频
+                    'videoMaxSize' => 5*1024 * 1024, //视频
                     'fileMaxSize' => 1024 * 1024, //文件
                     'imageManagerListPath' => '/', //图片列表
                     'fileManagerListPath' => '/', //文件列表

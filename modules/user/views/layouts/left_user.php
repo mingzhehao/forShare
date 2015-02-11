@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-
+use common\models\User;
 /**
  * @var \yii\web\View $this
  * @var \yii\gii\Generator[] $generators
@@ -17,6 +17,9 @@ use yii\helpers\Html;
  *  2.不是当前模块调用模块为2
  */
 $userid = isset($_GET['id'])?$_GET['id']:Yii::$app->user->id;//url中的id
+$userImage = explode('.',User::findIdentity($userid)->file);
+$userMiddleImage = $userImage['0'].'_middle.'.$userImage['1'];
+$userBigImage = $userImage['0'].'_big.'.$userImage['1'];
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
@@ -31,7 +34,7 @@ $userid = isset($_GET['id'])?$_GET['id']:Yii::$app->user->id;//url中的id
         <div class="well">
             <div class="media">
                 <div class="pull-left">
-                    <img class="media-object" src="/images/noavatar_middle.gif" alt="" style="width: 100px; height: 100px;">
+                    <img class="media-object" src="<?php echo '/'.$userMiddleImage; ?>" alt="" style="width: 100px; height: 100px;">
                 </div>                
                 <div class="media-body">
                     <?php if($userid == Yii::$app->user->id){ ?>

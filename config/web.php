@@ -138,7 +138,9 @@ $config = [
                 'humour/*',
                 'upload/*',
                 'crud/*',
+                'comment/*',
                 'markdown/parse/download',//需要开启,不然影响markdown
+                'test/*',
         ]
     ],
 

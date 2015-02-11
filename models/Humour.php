@@ -153,7 +153,7 @@ class Humour extends BaseModel
         {
             if($this->isNewRecord)
             {
-                $this->create_time=time();
+                $this->create_time=date("Y-m-d H:i:s",time());
                 $this->author_id=Yii::$app->user->id;
             }
             return true;
