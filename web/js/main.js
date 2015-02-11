@@ -68,7 +68,7 @@ jQuery(document).ready(function () {
 	    var _this = this;
 	    $(this).popover('show');
 	    $.ajax({
-	        url: $(this).attr('href'),
+	        url: $(this).attr('href')+'/show',
 	        success: function(html){
 	            $('.popover-content').html(html);
                 $('.popover .btn-success, .popover .btn-danger').click(function(){

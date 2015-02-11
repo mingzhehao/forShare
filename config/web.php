@@ -119,6 +119,7 @@ $config = [
             'showScriptName' => false,
             'rules' =>  [
                         'User/<id:\d+>'=>'User/home',
+                        'User/<id:\d+>/show'=>'User/home/show',//用户基本信息展示
                         'User/setting'=>'User/home/setting',
                         'User/avatar'=>'User/home/avatar',
                 ],

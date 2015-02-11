@@ -73,6 +73,19 @@ class HomeController extends Controller
         return $this->render('setting',['model'=>$model,]);
     }
 
+
+    /*用户基本信息对外展示设置*/
+    public function actionShow()
+    {
+        $params = Yii::$app->request->get();
+        $model = User::getUserInfo($params['id']);
+        if(empty($model))
+        {
+            return $this->render('error',['id'=>Yii::$app->user->id]);
+        }
+        return $this->renderPartial('userinfo',['model'=>$model,]);
+    }
+
     /*用户头像设置*/
     public function actionAvatar()
     {
