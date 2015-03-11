@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use common\models\User;
 
 /**
  * @var yii\web\View $this
@@ -10,15 +11,17 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', '回复主题', [
   'modelClass' => 'Comment',
 ]);
+$userImage = explode('.',User::findIdentity($model->author_id)->file);
+$userSmallImage = $userImage['0'].'_small.'.$userImage['1'];
 ?>
 
     <li class="media" data-key="37182">
-        <a class="pull-left" href="/user/<?php echo $model->author_id; ?>" data-original-title="" title="">
-            <img class="media-object" src="/images/noavatar_small.gif" alt="">
+        <a class="pull-left" href="/User/<?php echo $model->author_id; ?>" data-original-title="" title="">
+            <img class="media-object" src="/<?php echo $userSmallImage;?>" alt="">
         </a>
         <div class="media-body">
             <div class="media-heading">
-                <a href="/user/<?php echo $model->author_id; ?>"><?php echo $model->author_name; ?></a> 发布于 5小时前<span class="pull-right"><a>举报</a>
+                <a href="/User/<?php echo $model->author_id; ?>"><?php echo $model->author_name; ?></a> 发布于 <?php echo $model->create_time; ?><span class="pull-right"><a>举报</a>
             </div>
             <div class="media-content">
                 <p><?php echo $model->content; ?> </p>

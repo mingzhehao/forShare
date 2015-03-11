@@ -82,6 +82,20 @@ class HumourController extends Controller
     {
         $this->layout = 'right_humour';
         $model   = $this->findModel($id);
+        /*view 查看次数存储*/
+        /*判断用户是否已经点查看过,通过cookie判断*/
+        $type = $this->getUniqueId();
+        $ip = Yii::$app->request->getUserIP();
+        $ip = str_replace('.','_',$ip);
+        $cookiename = $type.'_'.$ip.'_'.$id;
+        $cookievalue = getDomainCookie($cookiename);
+        if(!isset($cookievalue))
+        {
+            $model->viewcount += 1;
+            $model->save();
+            setDomainCookie($cookiename,'1',86400);
+        }
+
         $comment = $this->newComment($model);
         /************评论分页开始****************/
         $dataProvider = $this->getComments($id);

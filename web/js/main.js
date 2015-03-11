@@ -27,8 +27,8 @@ jQuery(document).ready(function () {
                 button.html("<span class=\"glyphicon glyphicon-gift\"></span> 您已连续签到" + html.days + "天，" + html.receive).addClass('disabled');
             },
             error: function (XMLHttpRequest, textStatus) {
-                $('#modal').modal({ remote: '/login'});
-                this.abort();
+               //$('#modal').modal({ remote: '/login'});
+               //this.abort();
             }
         });
         return false;
@@ -80,8 +80,8 @@ jQuery(document).ready(function () {
                         },
                         error: function (XMLHttpRequest, textStatus) {
                             $(_this).popover('hide');
-                            $('#modal').modal({ remote: '/login'});
-                            this.abort();
+                            //$('#modal').modal({ remote: '/login'});
+                            //this.abort();
                         }
                     });
                     return false;
@@ -137,8 +137,8 @@ jQuery(document).ready(function () {
                 }
             },
             error: function (XMLHttpRequest, textStatus) {
-                $('#modal').modal({ remote: '/login'});
-                this.abort();
+                //$('#modal').modal({ remote: '/login'});
+                //this.abort();
             }
         });
         return false;
@@ -167,8 +167,8 @@ jQuery(document).ready(function () {
                 em.html(data.count);
             },
             error: function (XMLHttpRequest, textStatus) {
-                $('#modal').modal({ remote: '/login'});
-                this.abort();
+                //$('#modal').modal({ remote: '/login'});
+                //this.abort();
             }
         });
         return false;
@@ -195,19 +195,24 @@ jQuery(document).ready(function () {
     //顶
     $('.up').on('click', function() {
         var a = $(this);
+        var params = a.attr('params');
         $.ajax({
-            url: a.attr('href'),
+            url: '/vote/index?'+params,
             dataType: 'json',
             success: function(data) {
                 a.parents('.vote').find('.up span').attr('style', 'color: green;');
                 a.parents('.vote').find('.down span').removeAttr('style');
                 a.parents('.vote').find('.up em').html(data.up);
-                a.parents('.vote').find('.down em').html(data.down);
-                a.attr('data-original-title', '您已顶').tooltip('show').attr('data-original-title', '顶');
+                a.parents('.vote').find('.down em').html(data.down);            if(data.stat === '-1')
+                    a.attr('data-original-title', '您已顶').tooltip('show').attr('data-original-title', '顶');
+                else if(data.stat === '-2')
+                    a.attr('data-original-title', '发生错误').tooltip('show').attr('data-original-title', '顶');
+                else
+                    a.attr('data-original-title', '您已顶').tooltip('show').attr('data-original-title', '顶');
             },
             error: function (XMLHttpRequest, textStatus) {
-                $('#modal').modal({ remote: '/login'});
-                this.abort();
+                //$('#modal').modal({ remote: '/login'});
+                //this.abort();
             }
         });
         return false;
@@ -215,8 +220,9 @@ jQuery(document).ready(function () {
     //踩
     $('.down').on('click', function() {
         var a = $(this);
+        var params = a.attr('params');
         $.ajax({
-            url: a.attr('href'),
+            url: '/vote/index?'+params,
             dataType: 'json',
             success: function(data) {
                 a.parents('.vote').find('.down span').attr('style', 'color: red;');
@@ -226,8 +232,8 @@ jQuery(document).ready(function () {
                 a.attr('data-original-title', '您已踩').tooltip('show').attr('data-original-title', '踩');
             },
             error: function (XMLHttpRequest, textStatus) {
-                $('#modal').modal({ remote: '/login'});
-                this.abort();
+                //$('#modal').modal({ remote: '/login'});
+                //this.abort();
             }
         });
         return false;
@@ -276,7 +282,7 @@ jQuery(document).ready(function () {
     }
 
     $('.scroll-pane').jScrollPane();
-    var api = $('.online .scroll-pane').data('jsp');
+    //var api = $('.online .scroll-pane').data('jsp');
     var throttleTimeout;
     $(window).bind('resize', function(){
 
@@ -289,7 +295,7 @@ jQuery(document).ready(function () {
             throttleTimeout = setTimeout(
                 function()
                 {
-                    api.reinitialise();
+                    //api.reinitialise();
                     throttleTimeout = null;
                 },
                 50

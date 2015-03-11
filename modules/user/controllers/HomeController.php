@@ -42,6 +42,14 @@ class HomeController extends Controller
                     'logout' => ['post'],
                 ],
             ],
+            // 'pageCache' => [
+            //     'class' => 'yii\filters\PageCache',
+            //     'only' => ['show'],//首页进行页面缓存
+            //     'duration' => 3600,
+            //     'variations' => [
+            //         \Yii::$app->language,
+            //     ],
+            // ]
         ];
     }
 

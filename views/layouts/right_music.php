@@ -35,6 +35,19 @@ $tags =Tag::findTagWeights(20,'music');
     </div>
 
     <div class="col-md-3 col-sm-4">
+    <?php if(Yii::$app->user->getIdentity()->role === 1 && isset($_GET['id'])) { ?>
+    <p>
+        <?= Html::a('更新', ['update', 'id' => $_GET['id']], ['class' => 'btn btn-primary btn-lg btn-block']) ?>
+        <?= Html::a('删除', ['delete', 'id' => $_GET['id']], [
+            'class' => 'btn btn-danger btn-lg btn-block',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
+    <?php } ?>
+
         <a class="btn btn-success btn-lg btn-block" href="/music/create"><span class="glyphicon glyphicon-plus"></span> 发布主题</a>
         <?php
             /***片段缓存----分类****/

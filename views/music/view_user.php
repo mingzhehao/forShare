@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\markdown\Markdown;
 use yii\widgets\ListView;
-
+$type = Yii::$app->controller->id; 
 /**
  * @var yii\web\View $this
  * @var app\models\TopicAdmin $model
@@ -14,27 +14,17 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => '话题管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="topic-admin-view">
+<div class="admin-view">
 
     <h1><?= Html::encode($this->title) ?> <small><?= Html::encode($model->classify) ?></small></h1>
-    <p>
-        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('删除', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
     <div class="action">
-        <span class="user"><a href="/user/28698"><span class="glyphicon glyphicon-user"></span><?= Html::encode($model->uname->username) ?></a></span>
+        <span class="user"><a href="/User/<?php echo $model->id;?>"><span class="glyphicon glyphicon-user"></span><?= Html::encode($model->uname->username) ?></a></span>
         <span class="time"><span class="glyphicon glyphicon-time"></span> <?= Html::encode($model->update_time) ?></span>
         <span class="views"><span class="glyphicon glyphicon-eye-open"></span> <?= Html::encode($model->viewcount) ?>次浏览</span>
         <span class="replies"><a href="#replies"><span class="glyphicon glyphicon-comment"></span> <?= Html::encode($dataProvider->totalCount); ?>条回复</a></span>
-        <span class="favourites"><a class="favourite" href="/favourite?type=topic&amp;id=5539" title="" data-toggle="tooltip" data-original-title="收藏"><span class="glyphicon glyphicon-star-empty"></span> <em><?= Html::encode($model->viewcount) ?></em></a></span>
-        <span class="vote"><a class="up" href="/vote?type=topic&amp;action=up&amp;id=5539" title="" data-toggle="tooltip" data-original-title="顶"><span class="glyphicon glyphicon-thumbs-up"></span> <em>0</em></a><a class="down" href="/vote?type=topic&amp;action=down&amp;id=5539" title="" data-toggle="tooltip" data-original-title="踩"><span class="glyphicon glyphicon-thumbs-down"></span> <em>0</em></a></span>
+        <span class="favourites"><a class="favourite" href="/favourite?type=<?php echo $type;?>&id=<?php echo $model->id;?>" title="" data-toggle="tooltip" data-original-title="收藏"><span class="glyphicon glyphicon-star-empty"></span> <em><?= Html::encode($model->viewcount) ?></em></a></span>
+        <span class="vote"><a class="up" href="/" params="type=<?php echo $type;?>&action=up&id=<?php echo $model->id;?>" title="" data-toggle="tooltip" data-original-title="顶"><span class="glyphicon glyphicon-thumbs-up"></span> <em><?php echo $model->up;?></em></a><a class="down" href="/"  params="type=<?php echo $type;?>&action=down&id=<?php echo $model->id;?>" title="" data-toggle="tooltip" data-original-title="踩"><span class="glyphicon glyphicon-thumbs-down"></span> <em>0</em></a></span>
     </div>
 
 
@@ -73,8 +63,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2>
                 共 <em><?php echo $dataProvider->totalCount;?></em> 条回复
                 <ul id="w0" class="nav nav-tabs">
-                    <li class="active"><a href="/topic/5558#replies">默认排序</a></li>
-                    <li><a href="/topic/5558?sort=desc#replies">最后回复</a></li></ul>                
+                    <li class="active"><a href="/<?php echo $type;?>/5558#replies">默认排序</a></li>
+                    <li><a href="/<?php echo $type;?>/5558?sort=desc#replies">最后回复</a></li></ul>                
             </h2>
         </div>
 
